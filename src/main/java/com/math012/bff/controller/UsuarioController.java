@@ -8,6 +8,7 @@ import com.math012.bff.business.dto.in.UsuarioDTORequest;
 import com.math012.bff.business.dto.out.EnderecoDTOResponse;
 import com.math012.bff.business.dto.out.TelefoneDTOResponse;
 import com.math012.bff.business.dto.out.UsuarioDTOResponse;
+import com.math012.bff.business.dto.out.ViaCepDTOResponse;
 import com.math012.bff.business.service.UsuarioService;
 import com.math012.bff.infra.security.SecurityConfig;
 import io.swagger.v3.oas.annotations.Operation;
@@ -125,4 +126,13 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioService.cadastrarTelefone(telefoneDTO, token));
     }
 
+
+    @GetMapping("/endereco/{cep}")
+    @Operation(summary = "Busca endereço através do cep", description = "Retorna endereço via API do ViaCep")
+    @ApiResponse(responseCode = "200", description = "Endereço retornado com sucesso")
+    @ApiResponse(responseCode = "400", description = "Cep inválido")
+    @ApiResponse(responseCode = "403", description = "Usuário não encontrado")
+    public ResponseEntity<ViaCepDTOResponse> buscarEnderecoViaCep(@PathVariable String cep){
+        return ResponseEntity.ok(usuarioService.buscarEnderecoPorCep(cep));
+    }
 }
