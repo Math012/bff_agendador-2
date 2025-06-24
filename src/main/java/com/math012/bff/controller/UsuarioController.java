@@ -81,7 +81,8 @@ public class UsuarioController {
     @ApiResponse(responseCode = "200", description = "Endereço atualizado com sucesso")
     @ApiResponse(responseCode = "404", description = "Usuário não encontrado")
     @ApiResponse(responseCode = "500", description = "Erro no servidor")
-    public ResponseEntity<EnderecoDTOResponse> atualizarEndereco(@RequestBody EnderecoDTORequest enderecoDTO, @RequestParam("id")Long id,
+    public ResponseEntity<EnderecoDTOResponse> atualizarEndereco(@RequestBody EnderecoDTORequest enderecoDTO,
+                                                                 @RequestParam("id")Long id,
                                                                  @RequestHeader("Authorization") String token){
         return ResponseEntity.ok(usuarioService.atualizarEndereco(enderecoDTO, id, token));
     }
@@ -91,7 +92,8 @@ public class UsuarioController {
     @ApiResponse(responseCode = "200", description = "Telefone atualizado com sucesso")
     @ApiResponse(responseCode = "404", description = "Usuário não encontrado")
     @ApiResponse(responseCode = "500", description = "Erro no servidor")
-    public ResponseEntity<TelefoneDTOResponse> atualizarTelefone(@RequestBody TelefoneDTORequest telefoneDTO, @RequestParam("id")Long id,
+    public ResponseEntity<TelefoneDTOResponse> atualizarTelefone(@RequestBody TelefoneDTORequest telefoneDTO,
+                                                                 @RequestParam("id")Long id,
                                                                  @RequestHeader("Authorization") String token){
         return ResponseEntity.ok(usuarioService.atualizarTelefone(telefoneDTO, id, token));
     }

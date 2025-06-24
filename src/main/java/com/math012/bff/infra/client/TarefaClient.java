@@ -28,7 +28,7 @@ public interface TarefaClient {
     void deletaTarefaPorId(@RequestParam("idTarefa")String id,
                            @RequestHeader("Authorization")String token);
 
-    @PatchMapping
+    @PutMapping("/status")
     TarefaDTOResponse alteraStatusNotificacao(@RequestParam("status") StatusTarefa statusTarefa,
                                               @RequestParam("idTarefa")String id,
                                               @RequestHeader("Authorization")String token);

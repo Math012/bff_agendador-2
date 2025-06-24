@@ -63,7 +63,7 @@ public class TarefaController {
         return ResponseEntity.ok().build();
     }
 
-    @PatchMapping
+    @PutMapping("/status")
     @Operation(summary = "Altera status da tarefa", description = "Altera o status da tarefa")
     @ApiResponse(responseCode = "200", description = "Status atualizado com sucesso")
     @ApiResponse(responseCode = "500", description = "Erro no servidor")

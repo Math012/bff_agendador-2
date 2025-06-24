@@ -1,56 +1,20 @@
-package com.math012.notificacaoapi.business;
+package com.math012.bff.business.service;
 
 
-
-import com.math012.notificacaoapi.business.dto.TarefasDTO;
-import jakarta.mail.MessagingException;
-import jakarta.mail.internet.InternetAddress;
-import jakarta.mail.internet.MimeMessage;
+import com.math012.bff.business.dto.out.TarefaDTOResponse;
+import com.math012.bff.infra.client.EmailClient;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.Context;
-
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
 
 
 @Service
 @RequiredArgsConstructor
 public class EmailService {
 
-    private final JavaMailSender javaMailSender;
-    private final TemplateEngine templateEngine;
+    private final EmailClient emailClient;
 
-    @Value("${envio.email.remetente}")
-    public String remetente;
-
-    @Value("${envio.email.nomeRemetente}")
-    public String nomeRemetente;
-
-    public void enviaEmail(TarefasDTO tarefaDTO){
-        try {
-            MimeMessage mensagem = javaMailSender.createMimeMessage();
-            MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mensagem, true, StandardCharsets.UTF_8.name());
-
-            mimeMessageHelper.setFrom(new InternetAddress(remetente, nomeRemetente));
-            mimeMessageHelper.setTo(InternetAddress.parse(tarefaDTO.getEmailUsuario()));
-            mimeMessageHelper.setSubject("Notificação de tarefa");
-
-            Context context = new Context();
-            context.setVariable("nomeTarefa", tarefaDTO.getNomeTarefa());
-            context.setVariable("dataEvento", tarefaDTO.getDataEvento());
-            context.setVariable("descricao", tarefaDTO.getDescricao());
-            String template = templateEngine.process("notificacao", context);
-            mimeMessageHelper.setText(template, true);
-            javaMailSender.send(mensagem);
-
-        }catch (MessagingException | UnsupportedEncodingException e){
-            throw new RuntimeException(e.getCause());
-        }
+    public void enviaEmail(TarefaDTOResponse tarefaDTO){
+        emailClient.enviarEmail(tarefaDTO);
     }
 
 }
